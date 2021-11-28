@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        var nft_left_price = "<%= nft_left.last_sale_usd_price %>"
+        var nft_right_price = "<%= nft_right.last_sale_usd_price %>"
+        var score = 0
+        var title_screen = true
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class="main">
+
+    <!--
+    <div id="overlay" style="display: flex; justify-content: center; align-items: center;">
+        <div style="align-items: center; display: flex; flex-direction: column;">
+            <h2 style="color: white;">Hey welcome to NFT Higher or Lower Game</h2>
+            <br>
+            <form action="/game" method="POST" >
+                <input placeholder="Collection to play" class="form-control" name="collection">
+                <button class="btn btn-success" style="margin-top: 5%;" onclick="startGame()">Start Game</button>
+            </form>
+        </div>
+    </div>
+-->
+
+    <div class="grid">
+
+        <div class="main__left">
+            
+            <div class="object_left">
+                <img id="left_image"src="<%= nft_left.image %>"  alt="Flowers in Chania" class="nft_image">
+            </div>
+            <div class="info">
+                <p id="left_name" class="name"><%= nft_left.asset_name %>  </p>
+                <p id="left_price" class="price">$<%= nft_left.last_sale_usd_price %><p id="left_usd" class="usd_price">(<%= nft_left.last_sale_price %> <%= nft_left.last_sale_symbol %>)</p></p>
+                
+          
+            </div>
+        </div>
+    
+        <div class="main__left">
+            
+            <div class="object_right">
+                <img id="right_image"src="<%= nft_right.image %>"  alt="Flowers in Chania" class="nft_image">
+            </div>
+            <div class="info">
+                <p id="right_name" class="name"><%= nft_left.asset_name %>  </p>
+                <p class="price">The price is</p>
+                <div id="vote_buttons">
+                    <button onclick="numberCounter()" type="button" class="btn btn-outline-success">More</button>
+                    <button onclick="numberCounter()" type="button" class="btn btn-outline-danger">Less</button>
+               
+                </div>
+                 <div id="number_div" style="visibility: hidden;">
+                     <p id="number" class="price number">$</p>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+    
+    
+<script>
+
+    function startGame(){
+        document.getElementById('overlay').style.setProperty('display',"none")
+    }
+
+    var number = document.getElementById('number_div')
+    function numberCounter(){
+        
+        change()
+        
+        
+    }
+
+    function change(){
+        $.get('/nfts', function(string) {
+            document.getElementById('vote_buttons').classList.add('d-none');
+            number.style.setProperty('visibility', "visible")
+            document.getElementById('number').style.setProperty('--num', nft_right_price)
+            
+            var left_info = string.split("$$$")[0]
+            var right_info = string.split("$$$")[1]
+
+            nft_right_price = right_info.split("::")[3]
+
+            setTimeout(function()
+            {
+                document.getElementById('vote_buttons').classList.remove('d-none');
+                number.style.setProperty('visibility', "hidden")
+                document.getElementById('left_name').innerText = left_info.split("::")[0];
+                document.getElementById('left_image').src = left_info.split("::")[1];
+                document.getElementById('left_usd').innerText = "("+left_info.split("::")[2] + left_info.split("::")[5]+")";
+                document.getElementById('left_price').innerText = "$"+left_info.split("::")[3];
+                //document.getElementById('left_date').innerText = left_info.split("::")[4];
+
+                document.getElementById('right_name').innerText = right_info.split("::")[0];
+                document.getElementById('right_image').src = right_info.split("::")[1];
+
+                document.getElementById('number').style.setProperty('--num', 0)
+            },3000)
+            
+
+            
+        })
+        
+    }
+    
+</script>
+</body>
+</html>
