@@ -1,0 +1,129 @@
+.main{
+    height: 100vh;
+    display: flex;
+}
+
+#overlay {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 2;
+}
+
+.grid{
+    justify-content: space-between;
+    display: flex;
+    width: 100%;
+    padding: 5% 8%;
+}
+
+.info{
+  padding-top: 5%;
+}
+
+.name{
+  padding-top: 5%;
+  font-size: 24px;
+  margin-bottom: 0%;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+}
+
+.price{
+  margin: 0%;
+  font-size: 36px;
+  font: 800 50px system-ui;
+  text-align: center;
+}
+
+.usd_price{
+  margin: 0%;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+}
+
+.object_left {
+  animation: MoveUpDown 10s linear infinite;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn{
+  min-width: 80px;
+}
+
+.object_right {
+  animation: MoveUpDown 10s linear infinite;
+    position: relative;
+    left: 0;
+    bottom: 0;
+    animation-delay: 400ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes MoveUpDown {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px);
+  }
+  50% {
+    transform: translate3d(0px, 15px, 0px);
+  }
+}
+
+
+.main__left{
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px;
+    justify-content: flex-start;
+    align-items:center;
+    
+}
+
+.nft_image{
+
+    width: 100%;
+    min-width: 80%;
+}
+
+#number_div{
+  display: inline;
+}
+
+#vote_buttons{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 3%;
+}
+
+
+
+@property --num {
+    syntax: "<integer>";
+    initial-value: 0;
+    inherits: false;
+  }
+  
+  .number {
+    transition: --num 2s cubic-bezier(1, 0.79, 0, 1);
+    counter-set: num var(--num);
+    font: 800 40px system-ui;
+  }
+  .number::after {
+    content: counter(num);
+  }
+  
